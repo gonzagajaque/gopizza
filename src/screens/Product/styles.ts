@@ -5,12 +5,12 @@ import { Button } from '../../components/Button';
 
 export const Container = styled.KeyboardAvoidingView`
     flex: 1;
-    background-color: ${({theme}) => theme.COLORS.BACKGROUND};
+    background-color: ${({ theme }) => theme.COLORS.BACKGROUND};
 `;
 
 export const Header = styled(LinearGradient).attrs(({ theme }) => ({
     colors: theme.COLORS.GRADIENT,
-    }))`
+}))`
     width: 100%;
     flex-direction: row;
     align-items: center;
@@ -21,7 +21,7 @@ export const Header = styled(LinearGradient).attrs(({ theme }) => ({
 export const Title = styled.Text`
     font-size: 24px;
 
-    ${({theme}) => css`
+    ${({ theme }) => css`
         fontFamily: ${theme.FONTS.TITLE};
         color: ${theme.COLORS.TITLE};
     `}
@@ -30,7 +30,7 @@ export const Title = styled.Text`
 export const DeleteLabel = styled.Text`
     font-size: 14px;
     
-    ${({theme}) => css`
+    ${({ theme }) => css`
         fontFamily: ${theme.FONTS.TEXT};
         color: ${theme.COLORS.TITLE};
     `}
@@ -49,4 +49,39 @@ max-width: 90px;
 margin-left: 32px;
 `;
 
+export const Form = styled.View`
+    width: 100%;
+    padding: 24px;
+`;
 
+export const Label = styled.Text`
+    font-size: 14px;
+    margin-bottom: 12px;
+
+    ${({ theme }) => css`
+        fontFamily: ${theme.FONTS.TEXT};
+        color: ${theme.COLORS.SECONDARY_900};
+    `}
+`;
+
+export const InputGroup = styled.View`
+    width: 100%;
+    margin-bottom: 16px;
+`;
+
+export const InputGroupHeader = styled.View`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const MaxCharacters = styled.Text`
+    font-size: 10px;
+    margin-bottom: 12px;
+
+    ${({ theme }) => css`
+        fontFamily: ${theme.FONTS.TEXT};
+        color: ${theme.COLORS.SECONDARY_900};
+    `}
+`;

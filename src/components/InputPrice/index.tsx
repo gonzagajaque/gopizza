@@ -1,16 +1,16 @@
 import React from 'react';
 import { TextInputProps } from 'react-native';
-import {Container, Size, Label, Input} from './styles';
+import { Container, Size, Label, Input } from './styles';
 
 type Props = {
     size: string;
 }
 
-export function InputPrice({size, ...rest}: Props) {
+export function InputPrice({ size, ...rest }: Props) {
     return (
         <Container>
             <Size>
-            <Label>{size}</Label>
+                <Label>{size}</Label>
             </Size>
             <Label>R$</Label>
             <Input keyboardType='numeric' {...rest} />

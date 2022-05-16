@@ -1,10 +1,10 @@
-import styled, {css} from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { TextInput } from 'react-native';
 
 export const Container = styled.View`
 width: 100%;
 height: 56px;
-border: 1px solid ${({theme}) => theme.COLORS.SHAPE};
+border: 1px solid ${({ theme }) => theme.COLORS.SHAPE};
 border-radius: 12px;
 margin-bottom: 8px;
 flex-direction: row;
@@ -17,14 +17,14 @@ width: 56px;
 justify-content: center;
 align-items: center;
 border-right-width: 1px;
-border-right-color: ${({theme}) => theme.COLORS.SHAPE};
+border-right-color: ${({ theme }) => theme.COLORS.SHAPE};
 margin-right: 18px;
 `;
 
 export const Label = styled.Text`
 font-size: 14px;
 
-${({theme}) => css`	
+${({ theme }) => css`	
     fontFamily: ${theme.FONTS.TEXT};
     color: ${theme.COLORS.SECONDARY_900};
 `}
