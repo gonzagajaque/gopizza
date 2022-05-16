@@ -1,14 +1,12 @@
-import React from "react";
-import { TextInput, TextInputProps } from "react-native";
+import React from 'react';
+import { TextInputProps } from 'react-native';
 
-import { Container, TypeProps } from "./styles";
+import { Container, TypeProps } from './styles';
 
 type Props = TextInputProps & {
-    type?: TypeProps;
+  type?: TypeProps;
 }
 
 export function Input({ type = 'primary', ...rest }: Props) {
-    return (
-        <Container type={type}  {...rest} />
-    );
+  return <Container type={type} {...rest} />
 }
