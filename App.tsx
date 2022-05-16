@@ -5,7 +5,7 @@ import { DMSerifDisplay_400Regular } from '@expo-google-fonts/dm-serif-display';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components/native';
-import { SignIn } from './src/screens/SignIn';
+import { Product } from './src/screens/Product';
 import { AuthProvider } from './src/hooks/auth';
 
 import theme from './src/theme';
@@ -25,7 +25,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style="light" translucent />
         <AuthProvider>
-          <SignIn />
+          <Product />
         </AuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
