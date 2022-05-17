@@ -5,11 +5,12 @@ import { DMSerifDisplay_400Regular } from '@expo-google-fonts/dm-serif-display';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components/native';
 import { Product } from './src/screens/Product';
+import { SignIn } from './src/screens/SignIn';
 import { AuthProvider } from './src/hooks/auth';
 import * as SplashScreen from 'expo-splash-screen';
+import { Home } from './src/screens/Home';
 
 import theme from './src/theme';
-import { SignIn } from './src/screens/SignIn';
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -30,7 +31,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style="light" translucent />
         <AuthProvider>
-          <Product />
+          <Home />
         </AuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
