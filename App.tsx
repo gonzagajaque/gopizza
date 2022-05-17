@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import theme from './src/theme';
 import { Routes } from './src/routes';
+import { Order } from './src/screens/Order';
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -29,7 +30,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style="light" translucent />
         <AuthProvider>
-          <Routes />
+          <Order />
         </AuthProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
