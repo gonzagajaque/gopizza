@@ -37,6 +37,15 @@ export function Home() {
             .catch(() => Alert.alert('Erro ao buscar pizzas'));
     }
 
+    function handleSearch() {
+        fetchPizzas(search);
+    }
+
+    function handleSearchClear() {
+        setSearch('');
+        fetchPizzas('');
+    }
+
     useEffect(() => {
         fetchPizzas('');
     }, []);
@@ -52,7 +61,11 @@ export function Home() {
                     <MaterialIcons name="logout" size={24} color={COLORS.TITLE} />
                 </TouchableOpacity>
             </Header>
-            <Search onSearch={() => { }} onClear={() => { }} />
+            <Search
+                onChangeText={setSearch}
+                value={search}
+                onSearch={handleSearch}
+                onClear={handleSearchClear} />
             <MenuHeader>
                 <Title>Cardápio</Title>
                 <MenuItemsNumber>10 pizzas</MenuItemsNumber>
