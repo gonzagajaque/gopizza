@@ -1,34 +1,38 @@
 import React, { useState, useCallback } from 'react';
+import { TouchableOpacity, Alert, FlatList } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useTheme } from 'styled-components/native';
+import firestore from '@react-native-firebase/firestore';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+
+import happyEmoji from '../../assets/happy.png';
+
+import { useAuth } from '../../hooks/auth';
+import { Search } from '../../components/Search';
+import { ProductCard, ProductProps } from '../../components/ProductCard';
 import {
     Container,
     Header,
     Greeting,
     GreetingEmoji,
     GreetingText,
+    Title,
     MenuHeader,
     MenuItemsNumber,
-    Title,
     NewProductButton
 } from './styles';
-import happyEmoji from '../../../src/assets/happy.png';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from 'styled-components/native';
-import { TouchableOpacity, Alert, FlatList } from 'react-native';
-import { Search } from '../../components/Search';
-import { ProductCard, ProductProps } from '../../components/ProductCard';
-import firestore from '@react-native-firebase/firestore';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 export function Home() {
     const [pizzas, setPizzas] = useState<ProductProps[]>([]);
-    const [products, setProducts] = useState<ProductProps[]>([]);
     const [search, setSearch] = useState('');
 
     const { COLORS } = useTheme();
     const navigation = useNavigation();
+    const { user, signOut } = useAuth();
 
     function fetchPizzas(value: string) {
-        const formattedValue = value.toLowerCase().trim();
+        const formattedValue = value.toLocaleLowerCase().trim();
+
         firestore()
             .collection('pizzas')
             .orderBy('name_insensitive')
@@ -39,13 +43,13 @@ export function Home() {
                 const data = response.docs.map(doc => {
                     return {
                         id: doc.id,
-                        ...doc.data()
+                        ...doc.data(),
                     }
                 }) as ProductProps[];
 
                 setPizzas(data);
             })
-            .catch(() => Alert.alert('Erro ao buscar pizzas'));
+            .catch(() => Alert.alert('Consulta', 'Não foi possível realizar a consulta'));
     }
 
     function handleSearch() {
@@ -58,7 +62,8 @@ export function Home() {
     }
 
     function handleOpen(id: string) {
-        navigation.navigate('product', { id });
+        const route = user?.isAdmin ? 'product' : 'order';
+        navigation.navigate(route, { id });
     }
 
     function handleAdd() {
@@ -73,26 +78,32 @@ export function Home() {
         }, [])
     );
 
+
     return (
         <Container>
             <Header>
                 <Greeting>
                     <GreetingEmoji source={happyEmoji} />
-                    <GreetingText>Ola, Admin</GreetingText>
+                    <GreetingText>Olá, Admin</GreetingText>
                 </Greeting>
-                <TouchableOpacity>
-                    <MaterialIcons name="logout" size={24} color={COLORS.TITLE} />
+
+                <TouchableOpacity onPress={signOut}>
+                    <MaterialIcons name="logout" color={COLORS.TITLE} size={24} />
                 </TouchableOpacity>
             </Header>
+
             <Search
                 onChangeText={setSearch}
                 value={search}
                 onSearch={handleSearch}
-                onClear={handleSearchClear} />
+                onClear={handleSearchClear}
+            />
+
             <MenuHeader>
                 <Title>Cardápio</Title>
-                <MenuItemsNumber>{pizzas.length}</MenuItemsNumber>
+                <MenuItemsNumber>{pizzas.length} pizzas</MenuItemsNumber>
             </MenuHeader>
+
             <FlatList
                 data={pizzas}
                 keyExtractor={item => item.id}
@@ -109,11 +120,15 @@ export function Home() {
                     marginHorizontal: 24
                 }}
             />
-            <NewProductButton
-                title='Cadastrar Pizza'
-                type='secondary'
-                onPress={handleAdd}
-            />
+
+            {
+                user?.isAdmin &&
+                <NewProductButton
+                    title="Cadastrar Pizza"
+                    type="secondary"
+                    onPress={handleAdd}
+                />
+            }
         </Container>
-    );
+    )
 }

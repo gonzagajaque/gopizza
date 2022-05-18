@@ -10,20 +10,20 @@ type Props = {
 
 export function BottomMenu({ title, color, notifications }: Props) {
     const noNotifications = notifications === '0';
-
+  
     return (
-        <Container>
-            <Title color={color}>{title}</Title>
-
-            {
-                notifications && (
-                    <Notification noNotifications={noNotifications}>
-                        <Quantity noNotifications={noNotifications}>
-                            {notifications}
-                        </Quantity>
-                    </Notification>
-                )
-            }
-        </Container>
+      <Container>
+        <Title color={color}>{title}</Title>
+  
+        {
+          notifications && (
+            <Notification noNotifications={noNotifications}>
+              <Quantity noNotifications={noNotifications}>
+                {notifications}
+              </Quantity>
+            </Notification>
+          )
+        }
+      </Container>
     )
-}
+  }

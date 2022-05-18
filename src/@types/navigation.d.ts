@@ -1,5 +1,5 @@
 export type ProductNavigationProps = {
-    id: string;
+    id?: string;
 };
 
 export type OrderNavigationProps = {

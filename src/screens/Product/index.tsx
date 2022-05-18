@@ -35,10 +35,10 @@ import { ProductProps } from '../../components/ProductCard';
 type PizzaResponse = ProductProps & {
   photo_path: string;
   prices_sizes: {
-    p: string,
-    m: string,
-    g: string
-  };
+    p: string;
+    m: string;
+    g: string;
+  }
 }
 
 export function Product() {
@@ -51,10 +51,9 @@ export function Product() {
   const [isLoading, setIsLoading] = useState(false);
   const [photoPath, setPhotoPath] = useState('');
 
+  const navigation = useNavigation();
   const route = useRoute();
   const { id } = route.params as ProductNavigationProps;
-
-  const navigation = useNavigation();
 
   async function handlePickerImage() {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -131,7 +130,7 @@ export function Product() {
           .ref(photoPath)
           .delete()
           .then(() => navigation.navigate('home'));
-      })
+      });
   }
 
   useEffect(() => {
@@ -142,6 +141,7 @@ export function Product() {
         .get()
         .then(response => {
           const product = response.data() as PizzaResponse;
+
           setName(product.name);
           setImage(product.photo_url);
           setDescription(product.description);
@@ -149,16 +149,18 @@ export function Product() {
           setPriceSizeM(product.prices_sizes.m);
           setPriceSizeG(product.prices_sizes.g);
           setPhotoPath(product.photo_path);
-        });
+        })
     }
-  }, [id]);
+  }, [id])
 
   return (
     <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Header>
           <ButtonBack onPress={handleGoBack} />
+
           <Title>Cadastrar</Title>
+
           {
             id ?
               <TouchableOpacity onPress={handleDelete}>
@@ -167,8 +169,10 @@ export function Product() {
               : <View style={{ width: 20 }} />
           }
         </Header>
+
         <Upload>
           <Photo uri={image} />
+
           {
             !id &&
             <PickImageButton
@@ -178,6 +182,7 @@ export function Product() {
             />
           }
         </Upload>
+
         <Form>
           <InputGroup>
             <Label>Nome</Label>
@@ -186,11 +191,13 @@ export function Product() {
               value={name}
             />
           </InputGroup>
+
           <InputGroup>
             <InputGroupHeader>
               <Label>Descrição</Label>
               <MaxCharacters>0 de 60 caracteres</MaxCharacters>
             </InputGroupHeader>
+
             <Input
               multiline
               maxLength={60}
@@ -199,28 +206,33 @@ export function Product() {
               value={description}
             />
           </InputGroup>
+
           <InputGroup>
             <Label>Tamanhos e preços</Label>
+
             <InputPrice
-              size='P'
+              size="P"
               onChangeText={setPriceSizeP}
               value={priceSizeP}
             />
+
             <InputPrice
-              size='M'
+              size="M"
               onChangeText={setPriceSizeM}
               value={priceSizeM}
             />
+
             <InputPrice
-              size='G'
+              size="G"
               onChangeText={setPriceSizeG}
               value={priceSizeG}
             />
           </InputGroup>
+
           {
             !id &&
             <Button
-              title='Cadastrar Pizza'
+              title="Cadastrar Pizza"
               isLoading={isLoading}
               onPress={handleAdd}
             />
@@ -228,5 +240,5 @@ export function Product() {
         </Form>
       </ScrollView>
     </Container>
-  );
+  )
 }
